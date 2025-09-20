@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="82" viewBox="0 0 360 82" role="img" aria-labelledby="title desc">
+  <title id="title">TwinCare Dental Logo</title>
+  <desc id="desc">TwinCare Dental logotype with blue and lime green tooth-heart emblem.</desc>
+  <defs>
+    <linearGradient id="shieldGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#28d37c" />
+      <stop offset="100%" stop-color="#4aa6ff" />
+    </linearGradient>
+  </defs>
+  <rect width="360" height="82" fill="transparent" />
+  <g transform="translate(20 10)">
+    <path d="M52 6c-11.4 0-24 8.6-24 22.9 0 16 13.5 28.7 24 35.1 10.5-6.4 24-19.1 24-35.1C76 14.6 63.4 6 52 6z" fill="none" stroke="#1c70ff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M30 28c4.6-12 16.7-15 22.6-6.5 3.3-3.4 10.8-4.6 15.4 4.5" stroke="url(#shieldGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" fill="none" />
+  </g>
+  <text x="110" y="46" fill="#1373ff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="32" letter-spacing="3">TWIN</text>
+  <text x="210" y="46" fill="#16c170" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="32" letter-spacing="3">CARE</text>
+  <text x="150" y="70" fill="#16c170" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="22" letter-spacing="6">DENTAL</text>
+  <line x1="130" y1="58" x2="210" y2="58" stroke="#16c170" stroke-width="2" stroke-linecap="round" />
+  <line x1="240" y1="58" x2="320" y2="58" stroke="#16c170" stroke-width="2" stroke-linecap="round" />
+</svg>

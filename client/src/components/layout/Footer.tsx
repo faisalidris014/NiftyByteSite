@@ -1,7 +1,50 @@
 import { Link } from "wouter";
 import logoPath from "@assets/Nifty Byte Inverted Color_1754788468624.png";
+import {
+  categoryPath,
+  getService,
+  serviceCategoryMeta,
+  servicePath,
+} from "@/lib/services";
 
 export default function Footer() {
+  const seoService = getService("digital-marketing", "search-engine-optimization");
+  const networkService = getService("it-manager-services", "network-monitoring-and-management");
+  const webService = getService("programming", "custom-website-design-and-development");
+
+  const footerServiceLinks = [
+    {
+      label: serviceCategoryMeta["digital-marketing"].title,
+      href: categoryPath("digital-marketing"),
+      testId: "footer-service-digital-marketing",
+    },
+    {
+      label: seoService?.title ?? "Search Engine Optimization",
+      href: seoService ? servicePath(seoService) : categoryPath("digital-marketing"),
+      testId: "footer-service-seo",
+    },
+    {
+      label: serviceCategoryMeta["it-manager-services"].title,
+      href: categoryPath("it-manager-services"),
+      testId: "footer-service-it-manager",
+    },
+    {
+      label: networkService?.title ?? "Network Monitoring & Management",
+      href: networkService ? servicePath(networkService) : categoryPath("it-manager-services"),
+      testId: "footer-service-network",
+    },
+    {
+      label: serviceCategoryMeta.programming.title,
+      href: categoryPath("programming"),
+      testId: "footer-service-programming",
+    },
+    {
+      label: webService?.title ?? "Custom Website Design & Development",
+      href: webService ? servicePath(webService) : categoryPath("programming"),
+      testId: "footer-service-web",
+    },
+  ];
+
   return (
     <footer className="bg-nb-card border-t border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
@@ -35,11 +78,17 @@ export default function Footer() {
           <div>
             <h3 className="font-sora font-semibold text-lg mb-4 text-nb-text">Services</h3>
             <ul className="space-y-2 text-nb-muted">
-              <li><Link href="/services/strategy" className="hover:text-nb-accent transition-colors" data-testid="footer-service-strategy">IT Strategy</Link></li>
-              <li><Link href="/services/digital-transformation" className="hover:text-nb-accent transition-colors" data-testid="footer-service-digital">Digital Transformation</Link></li>
-              <li><Link href="/services/cybersecurity" className="hover:text-nb-accent transition-colors" data-testid="footer-service-cyber">Cybersecurity</Link></li>
-              <li><Link href="/services/cloud" className="hover:text-nb-accent transition-colors" data-testid="footer-service-cloud">Cloud Services</Link></li>
-              <li><Link href="/services/managed-it" className="hover:text-nb-accent transition-colors" data-testid="footer-service-managed">Managed IT</Link></li>
+              {footerServiceLinks.map((item) => (
+                <li key={item.testId}>
+                  <Link
+                    href={item.href}
+                    className="hover:text-nb-accent transition-colors"
+                    data-testid={item.testId}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

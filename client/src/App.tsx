@@ -10,6 +10,8 @@ import Home from "@/pages/Home";
 import About from "@/pages/About";
 import Contact from "@/pages/Contact";
 import Services from "@/pages/Services";
+import ServiceCategoryPage from "@/pages/services/Category";
+import ServiceDetailPage from "@/pages/services/Detail";
 import Industries from "@/pages/Industries";
 import Resources from "@/pages/Resources";
 import Blog from "@/pages/Blog";
@@ -21,6 +23,12 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/contact" component={Contact} />
+      <Route path="/services/:category/:slug">
+        {(params) => <ServiceDetailPage category={params.category} slug={params.slug} />}
+      </Route>
+      <Route path="/services/:category">
+        {(params) => <ServiceCategoryPage category={params.category} />}
+      </Route>
       <Route path="/services" component={Services} />
       <Route path="/industries" component={Industries} />
       <Route path="/resources" component={Resources} />

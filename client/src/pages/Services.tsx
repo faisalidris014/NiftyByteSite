@@ -1,193 +1,163 @@
+import { Link, useLocation } from "wouter";
 import { GlowCard } from "@/components/ui/glow-card";
 import { GlowButton } from "@/components/ui/glow-button";
 import { GradientText } from "@/components/ui/gradient-text";
+import {
+  categoryPath,
+  serviceCategoryMeta,
+  serviceCategoryOrder,
+  servicePath,
+  servicesByCategory,
+} from "@/lib/services";
+
+function splitTitle(title: string): { lead: string; focus: string } {
+  const words = title.split(" ").filter(Boolean);
+  if (words.length <= 1) {
+    return { lead: "", focus: title };
+  }
+  const focus = words.pop() as string;
+  return {
+    lead: words.join(" "),
+    focus,
+  };
+}
 
 export default function Services() {
-  const services = [
-    {
-      icon: "fas fa-network-wired",
-      title: "IT Strategy & Planning",
-      description: "Strategic IT planning and execution to align technology with your business goals",
-      features: [
-        "IT Infrastructure Assessment",
-        "Technology Roadmapping",
-        "Digital Strategy Planning",
-        "Budget Planning & Optimization",
-        "Vendor Management",
-        "Risk Assessment"
-      ],
-      outcomes: [
-        "Reduced IT costs by 25-40%",
-        "Improved system reliability",
-        "Better alignment with business goals"
-      ]
-    },
-    {
-      icon: "fas fa-rocket",
-      title: "Digital Transformation",
-      description: "Transform your business with cutting-edge technology solutions",
-      features: [
-        "Cloud Migration Strategy",
-        "Process Automation",
-        "Digital Workflow Optimization",
-        "Legacy System Modernization",
-        "Integration Solutions",
-        "Change Management"
-      ],
-      outcomes: [
-        "40% increase in operational efficiency",
-        "Faster time-to-market",
-        "Enhanced customer experience"
-      ]
-    },
-    {
-      icon: "fas fa-shield-alt", 
-      title: "Cybersecurity Services",
-      description: "Protect your data and systems with enterprise-grade security",
-      features: [
-        "Security Audits & Assessments",
-        "Threat Detection & Response",
-        "Compliance Management",
-        "Employee Security Training",
-        "Incident Response Planning",
-        "Penetration Testing"
-      ],
-      outcomes: [
-        "99.9% threat detection rate",
-        "Zero security incidents",
-        "Full compliance achievement"
-      ]
-    },
-    {
-      icon: "fas fa-cloud",
-      title: "Cloud Services", 
-      description: "Leverage the power of cloud computing for scalability and efficiency",
-      features: [
-        "Cloud Strategy & Planning",
-        "Migration Services",
-        "Multi-Cloud Management",
-        "Cloud Security",
-        "Cost Optimization",
-        "DevOps & Automation"
-      ],
-      outcomes: [
-        "30-50% cost reduction",
-        "Improved scalability",
-        "Enhanced disaster recovery"
-      ]
-    },
-    {
-      icon: "fas fa-tools",
-      title: "Managed IT Services",
-      description: "Comprehensive IT support and management for your entire infrastructure",
-      features: [
-        "24/7 Monitoring & Support",
-        "Help Desk Services",
-        "Network Management",
-        "Backup & Recovery",
-        "Software Management",
-        "Hardware Procurement"
-      ],
-      outcomes: [
-        "99.9% uptime guarantee",
-        "Faster issue resolution",
-        "Predictable IT costs"
-      ]
-    },
-    {
-      icon: "fas fa-cogs",
-      title: "IT Infrastructure",
-      description: "Build and maintain robust, scalable IT infrastructure",
-      features: [
-        "Network Design & Implementation",
-        "Server Management",
-        "Storage Solutions",
-        "Virtualization",
-        "Disaster Recovery",
-        "Performance Optimization"
-      ],
-      outcomes: [
-        "Improved system performance",
-        "Reduced downtime",
-        "Better scalability"
-      ]
-    }
-  ];
+  const [, navigate] = useLocation();
+
+  const categoryCards = serviceCategoryOrder.map((slug) => ({
+    slug,
+    meta: serviceCategoryMeta[slug],
+    highlights: servicesByCategory[slug].slice(0, 3),
+  }));
 
   return (
     <div className="min-h-screen bg-nb-bg pt-20">
-      {/* Hero Section */}
       <section className="py-20 bg-gradient-to-br from-nb-primary/20 to-nb-accent/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="font-sora font-bold text-4xl sm:text-5xl lg:text-6xl mb-6" data-testid="services-hero-title">
-            Our <GradientText>Services</GradientText>
+          <h1 className="font-sora font-bold text-4xl sm:text-5xl lg:text-6xl mb-6">
+            Our <GradientText>Service Ecosystem</GradientText>
           </h1>
-          <p className="text-xl text-nb-muted max-w-3xl mx-auto" data-testid="services-hero-subtitle">
-            Comprehensive IT solutions designed to transform your business and drive sustainable growth
+          <p className="text-xl text-nb-muted max-w-3xl mx-auto">
+            Every engagement is anchored in measurable outcomes. Explore the marketing, managed services, and engineering capabilities that help teams scale faster.
           </p>
         </div>
       </section>
 
-      {/* Services Grid */}
-      <section className="py-20">
+      <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
-              <GlowCard key={service.title} className="p-8 hover:scale-105 transition-all duration-300" data-testid={`service-detail-card-${index}`}>
-                <div className="w-16 h-16 bg-gradient-brand rounded-2xl flex items-center justify-center mb-6">
-                  <i className={`${service.icon} text-2xl text-white`}></i>
-                </div>
-                
-                <h3 className="font-sora font-bold text-2xl mb-4 text-nb-text" data-testid={`service-detail-title-${index}`}>
-                  {service.title}
-                </h3>
-                
-                <p className="text-nb-muted mb-6 leading-relaxed" data-testid={`service-detail-description-${index}`}>
-                  {service.description}
-                </p>
-
-                <div className="mb-6">
-                  <h4 className="font-semibold text-nb-text mb-3">What You Get:</h4>
-                  <ul className="space-y-2 text-nb-muted text-sm">
-                    {service.features.map((feature, featureIndex) => (
-                      <li key={featureIndex} className="flex items-center" data-testid={`service-feature-${index}-${featureIndex}`}>
-                        <i className="fas fa-check text-nb-accent mr-2"></i> {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <div className="mb-6">
-                  <h4 className="font-semibold text-nb-text mb-3">Typical Outcomes:</h4>
-                  <ul className="space-y-2 text-nb-muted text-sm">
-                    {service.outcomes.map((outcome, outcomeIndex) => (
-                      <li key={outcomeIndex} className="flex items-center" data-testid={`service-outcome-${index}-${outcomeIndex}`}>
-                        <i className="fas fa-arrow-up text-green-400 mr-2"></i> {outcome}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                <GlowButton size="sm" className="w-full" data-testid={`service-detail-cta-${index}`}>
-                  Learn More
-                </GlowButton>
-              </GlowCard>
-            ))}
+            {categoryCards.map((category) => {
+              const titleParts = splitTitle(category.meta.title);
+              return (
+                <GlowCard key={category.slug} className="p-8 flex flex-col">
+                  <h2 className="font-sora font-semibold text-3xl text-nb-text mb-4">
+                    {titleParts.lead ? `${titleParts.lead} ` : ""}
+                    <GradientText>{titleParts.focus}</GradientText>
+                  </h2>
+                  <p className="text-nb-muted mb-4 leading-relaxed">{category.meta.tagline}</p>
+                  <p className="text-nb-muted flex-1 leading-relaxed">{category.meta.description}</p>
+                  {category.highlights.length > 0 && (
+                    <div className="mt-6">
+                      <h3 className="text-sm font-semibold text-nb-text uppercase tracking-wide mb-3">
+                        Featured services
+                      </h3>
+                      <ul className="space-y-2 text-sm text-nb-muted">
+                        {category.highlights.map((service) => (
+                          <li key={service.slug}>
+                            <Link
+                              href={servicePath(service)}
+                              className="text-nb-text hover:text-nb-accent transition-colors"
+                            >
+                              {service.title}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                  <GlowButton
+                    className="mt-8"
+                    onClick={() => navigate(categoryPath(category.slug))}
+                  >
+                    Explore {category.meta.title}
+                  </GlowButton>
+                </GlowCard>
+              );
+            })}
           </div>
         </div>
       </section>
 
-      {/* CTA Section */}
+      <section className="py-16 bg-nb-card/10 border-y border-white/5">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="font-sora font-bold text-3xl sm:text-4xl mb-4">
+              All Services by <GradientText>Category</GradientText>
+            </h2>
+            <p className="text-nb-muted text-lg max-w-3xl mx-auto">
+              Drill into any capability to see the complete playbook, deliverables, and launch process. Every page below is powered by the detailed landing content you provided.
+            </p>
+          </div>
+
+          <div className="space-y-10">
+            {serviceCategoryOrder.map((slug) => {
+              const meta = serviceCategoryMeta[slug];
+              const services = servicesByCategory[slug];
+              return (
+                <div
+                  key={slug}
+                  className="bg-nb-card border border-nb-primary/20 rounded-2xl p-6 md:p-10"
+                >
+                  <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                    <div>
+                      <h3 className="font-sora text-2xl text-nb-text mb-1">{meta.title}</h3>
+                      <p className="text-nb-muted">{meta.tagline}</p>
+                    </div>
+                    <GlowButton
+                      variant="secondary"
+                      onClick={() => navigate(categoryPath(slug))}
+                    >
+                      View category overview
+                    </GlowButton>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-4 mt-8">
+                    {services.map((service) => (
+                      <Link
+                        key={service.slug}
+                        href={servicePath(service)}
+                        className="block border border-white/5 rounded-xl p-4 hover:border-nb-accent/40 hover:shadow-soft transition-all duration-200"
+                      >
+                        <h4 className="font-semibold text-nb-text mb-1">{service.title}</h4>
+                        {service.subtitle && (
+                          <p className="text-sm text-nb-accent mb-2">{service.subtitle}</p>
+                        )}
+                        <p className="text-sm text-nb-muted leading-relaxed">{service.summary}</p>
+                        <span className="inline-flex items-center text-sm text-nb-accent mt-3">
+                          View details
+                          <span className="ml-1">&gt;</span>
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       <section className="py-20 bg-gradient-to-r from-nb-primary/20 to-nb-accent/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="font-sora font-bold text-3xl sm:text-4xl mb-6" data-testid="services-cta-title">
-            Ready to Transform Your <GradientText>IT Infrastructure?</GradientText>
+          <h2 className="font-sora font-bold text-3xl sm:text-4xl mb-6">
+            Ready to Activate Your <GradientText>Roadmap?</GradientText>
           </h2>
-          <p className="text-xl text-nb-muted mb-8 max-w-3xl mx-auto" data-testid="services-cta-subtitle">
-            Let's discuss your specific needs and create a customized solution that drives real results.
+          <p className="text-xl text-nb-muted mb-8 max-w-3xl mx-auto">
+            Share your goals and we will align the right mix of marketing, managed IT, and engineering capabilities to hit them.
           </p>
-          <GlowButton size="lg" className="text-lg" data-testid="services-cta-button">
-            Get Your Free Consultation
+          <GlowButton size="lg" className="text-lg" onClick={() => navigate("/contact")}>
+            Book a strategy session
           </GlowButton>
         </div>
       </section>

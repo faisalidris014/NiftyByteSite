@@ -162,6 +162,16 @@
     50% { transform: translateY(-10px); }
   }
 
+  .trust-indicator-marquee {
+    animation: trust-indicator-scroll 32s linear infinite;
+    will-change: transform;
+  }
+
+  @keyframes trust-indicator-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
   .hover\:glow:hover {
     box-shadow: 
       0 0 30px rgba(217, 70, 239, 0.6),
@@ -171,6 +181,14 @@
 
   .bg-gradient-brand {
     background: linear-gradient(135deg, #FF4FD8 0%, #7B2DFF 50%, #3C1B86 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .trust-indicator-marquee {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transform: none !important;
   }
 }
 

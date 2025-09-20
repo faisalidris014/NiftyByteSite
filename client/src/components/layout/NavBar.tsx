@@ -2,65 +2,49 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { 
-  Menu, 
-  ChevronDown, 
-  Brain, 
-  Rocket, 
-  Shield, 
-  Cloud, 
-  Settings, 
-  BarChart3 
+import type { LucideIcon } from "lucide-react";
+import type { ServiceCategory } from "@/content/service-pages";
+import {
+  Menu,
+  ChevronDown,
+  Megaphone,
+  ServerCog,
+  Code2,
 } from "lucide-react";
 import logoIconPath from "@assets/1754808044144_1754808063522.png";
 import niftybyteTextPath from "@assets/NIFTYBYTE_text (1)_1756663209425.png";
+import {
+  categoryPath,
+  serviceCategoryMeta,
+  serviceCategoryOrder,
+  servicePath,
+  servicesByCategory,
+} from "@/lib/services";
+
+const serviceIcons: Record<ServiceCategory, LucideIcon> = {
+  "digital-marketing": Megaphone,
+  "it-manager-services": ServerCog,
+  programming: Code2,
+};
 
 export default function NavBar() {
   const [location] = useLocation();
   const [isOpen, setIsOpen] = useState(false);
 
-  const renderIcon = (IconComponent: any) => {
+  const renderIcon = (IconComponent: LucideIcon) => {
     return <IconComponent size={24} />;
   };
 
-  const services = [
-    { 
-      name: "AI-Powered IT Strategy", 
-      href: "/services/strategy",
-      description: "Strategic IT planning with AI insights to optimize your technology roadmap and business outcomes.",
-      icon: Brain
-    },
-    { 
-      name: "Digital Transformation", 
-      href: "/services/digital-transformation",
-      description: "End-to-end digital transformation leveraging AI to modernize your business processes.",
-      icon: Rocket
-    },
-    { 
-      name: "Cybersecurity & Compliance", 
-      href: "/services/cybersecurity",
-      description: "AI-enhanced security solutions to protect your business from evolving cyber threats.",
-      icon: Shield
-    },
-    { 
-      name: "Cloud Migration & Optimization", 
-      href: "/services/cloud",
-      description: "Smart cloud solutions with AI-driven cost optimization and performance monitoring.",
-      icon: Cloud
-    },
-    { 
-      name: "Managed IT Services", 
-      href: "/services/managed-it",
-      description: "24/7 proactive IT support powered by AI monitoring and predictive maintenance.",
-      icon: Settings
-    },
-    { 
-      name: "Data Analytics & AI", 
-      href: "/services/data-analytics",
-      description: "Transform your data into actionable insights with advanced AI and machine learning.",
-      icon: BarChart3
-    },
-  ];
+  const serviceCategories = serviceCategoryOrder.map((slug) => {
+    const meta = serviceCategoryMeta[slug];
+    const highlights = servicesByCategory[slug].slice(0, 3);
+    return {
+      slug,
+      meta,
+      highlights,
+      icon: serviceIcons[slug],
+    };
+  });
 
   const industries = [
     { name: "Healthcare", href: "/industries/healthcare" },
@@ -102,38 +86,66 @@ export default function NavBar() {
               <button className="text-nb-text hover:text-nb-accent transition-colors flex items-center" data-testid="nav-services">
                 Services <ChevronDown className="ml-1 h-3 w-3 group-hover:rotate-180 transition-transform duration-200" />
               </button>
-              <div className="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
-                <div className="bg-nb-card border border-nb-primary/20 w-[800px] p-6 rounded shadow-floating">
-                  <div className="grid grid-cols-2 gap-4">
-                    {services.map((service) => (
-                      <Link 
-                        key={service.href} 
-                        href={service.href} 
-                        className="group/item block p-4 rounded border border-white/5 hover:border-white/10 hover:bg-nb-primary/3 hover:shadow-soft transition-all duration-200" 
-                        data-testid={`nav-service-${service.name.toLowerCase().replace(/\s+/g, '-')}`}
-                      >
-                        <div className="flex items-start space-x-3">
-                          <div className="mt-1 text-nb-accent group-hover/item:text-pink-300 group-hover/item:scale-110 transition-all duration-200 [&>svg]:drop-shadow-[0_0_6px_rgba(255,79,216,0.4)]">
-                            {renderIcon(service.icon)}
+              <div className="absolute top-full left-1/2 -translate-x-1/2 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+                <div
+                  className="bg-nb-card border border-nb-primary/20 w-full p-6 rounded-2xl shadow-floating"
+                  style={{ maxWidth: "min(900px, calc(100vw - 2rem))" }}
+                >
+                  <div className="overflow-x-auto overscroll-x-contain pb-1">
+                    <div className="grid md:grid-cols-3 gap-4 min-w-[900px]">
+                      {serviceCategories.map((category) => (
+                        <div
+                          key={category.slug}
+                          className="group/item p-4 rounded border border-white/5 hover:border-white/10 hover:bg-nb-primary/3 hover:shadow-soft transition-all duration-200 flex flex-col"
+                        >
+                          <div className="flex items-start space-x-3 mb-4">
+                            <div className="mt-1 text-nb-accent group-hover/item:text-pink-300 group-hover/item:scale-110 transition-all duration-200 [&>svg]:drop-shadow-[0_0_6px_rgba(255,79,216,0.4)]">
+                              {renderIcon(category.icon)}
+                            </div>
+                            <div className="flex-1">
+                              <Link
+                                href={categoryPath(category.slug)}
+                                className="font-semibold text-nb-text hover:text-nb-accent transition-colors mb-1 block"
+                                data-testid={`nav-service-${category.slug}`}
+                              >
+                                {category.meta.title}
+                              </Link>
+                              <p className="text-sm text-nb-muted leading-relaxed">
+                                {category.meta.tagline}
+                              </p>
+                            </div>
                           </div>
-                          <div className="flex-1">
-                            <h3 className="font-semibold text-nb-text group-hover/item:text-nb-accent transition-colors mb-1">
-                              {service.name}
-                            </h3>
-                            <p className="text-sm text-nb-muted group-hover/item:text-nb-text transition-colors leading-relaxed">
-                              {service.description}
-                            </p>
-                          </div>
+                          <ul className="space-y-2 text-sm text-nb-muted mb-4 flex-1">
+                            {category.highlights.map((service) => (
+                              <li key={service.slug}>
+                                <Link
+                                  href={servicePath(service)}
+                                  className="flex items-center text-nb-text hover:text-nb-accent transition-colors"
+                                >
+                                  <span className="mr-2 text-nb-accent">&gt;</span>
+                                  {service.title}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                          <Link
+                            href={categoryPath(category.slug)}
+                            className="inline-flex items-center text-nb-accent hover:text-nb-primary transition-colors text-sm font-medium"
+                          >
+                            Explore {category.meta.title}
+                            <span className="ml-1">&gt;</span>
+                          </Link>
                         </div>
-                      </Link>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                   <div className="mt-6 pt-4 border-t border-white/10">
                     <Link 
                       href="/services" 
                       className="inline-flex items-center text-nb-accent hover:text-nb-primary transition-colors font-medium"
                     >
-                      View All Services →
+                      View All Services
+                      <span className="ml-1">&gt;</span>
                     </Link>
                   </div>
                 </div>
@@ -200,17 +212,32 @@ export default function NavBar() {
                 <Link href="/" className="text-nb-text hover:text-nb-accent transition-colors" onClick={() => setIsOpen(false)}>
                   Home
                 </Link>
-                <div className="space-y-2">
+                <div className="space-y-3">
                   <span className="text-nb-muted text-sm font-medium">Services</span>
-                  {services.map((service) => (
-                    <Link 
-                      key={service.href}
-                      href={service.href} 
-                      className="block pl-4 text-nb-text hover:text-nb-accent transition-colors" 
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {service.name}
-                    </Link>
+                  {serviceCategories.map((category) => (
+                    <div key={category.slug} className="space-y-1">
+                      <Link
+                        href={categoryPath(category.slug)}
+                        className="block pl-4 text-nb-text hover:text-nb-accent transition-colors font-medium"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {category.meta.title}
+                      </Link>
+                      {category.highlights.length > 0 && (
+                        <div className="pl-6 border-l border-white/10 space-y-1">
+                          {category.highlights.map((service) => (
+                            <Link
+                              key={service.slug}
+                              href={servicePath(service)}
+                              className="block text-sm text-nb-muted hover:text-nb-accent transition-colors"
+                              onClick={() => setIsOpen(false)}
+                            >
+                              {service.title}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   ))}
                 </div>
                 <div className="space-y-2">

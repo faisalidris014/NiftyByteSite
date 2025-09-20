@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="360" height="96" viewBox="0 0 360 96" role="img" aria-labelledby="title desc">
+  <title id="title">Stone Arch Dental Logo</title>
+  <desc id="desc">Stylized dental arch emblem followed by Stone Arch Dental wordmark.</desc>
+  <defs>
+    <linearGradient id="archGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#6940ff" />
+      <stop offset="100%" stop-color="#39d0c3" />
+    </linearGradient>
+  </defs>
+  <rect width="360" height="96" fill="transparent" />
+  <g transform="translate(24 18)">
+    <path d="M48 4c-19 0-36 17.2-36 40.2 0 14 7.5 24.8 17.9 30.6 1.9 1.1 4.2 0.5 5.4-1.3 3.6-5.3 8-8.9 12.7-8.9s9.1 3.6 12.7 8.9c1.2 1.8 3.5 2.4 5.4 1.3C76.5 69 84 58.2 84 44.2 84 21.2 67 4 48 4z" fill="none" stroke="url(#archGradient)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M30 44c3-10 10.5-16 18-16s15 6 18 16" fill="none" stroke="#39d0c3" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+  <text x="120" y="46" fill="#ffffff" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="34" letter-spacing="2">STONE ARCH</text>
+  <text x="120" y="74" fill="#39d0c3" font-family="'Avenir Next', 'Segoe UI', sans-serif" font-size="24" letter-spacing="10">DENTAL</text>
+  <line x1="118" y1="82" x2="310" y2="82" stroke="#39d0c3" stroke-width="3" stroke-linecap="round" opacity="0.6" />
+</svg>
